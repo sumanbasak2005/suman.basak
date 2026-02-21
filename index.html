@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suman Basak — Lead SRE & DevOps Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Literata:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --surface: #111620;
+      --border: #1e2535;
+      --accent: #00e5ff;
+      --accent2: #ff6b35;
+      --text: #e8eaf0;
+      --muted: #6b7a99;
+      --card: #141926;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Literata', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* GRID BACKGROUND */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 5rem 0 3rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,229,255,0.3);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    h1 .line2 {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .tagline {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-style: italic;
+      max-width: 560px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .tagline strong {
+      color: var(--text);
+      font-style: normal;
+    }
+
+    .header-meta {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .meta-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .meta-item .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .cta-row {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      padding: 0.75rem 1.6rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: #33ecff; transform: translateY(-2px); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── SECTION ── */
+    section { padding: 4rem 0; border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .about-text p { color: var(--muted); margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .stat {
+      background: var(--card);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.4rem;
+    }
+
+    /* ── EXPERTISE ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-card {
+      background: var(--card);
+      padding: 1.8rem;
+      transition: background 0.2s;
+    }
+    .skill-card:hover { background: var(--surface); }
+
+    .skill-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .skill-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tags {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(0,229,255,0.07);
+      border: 1px solid rgba(0,229,255,0.15);
+      color: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding-top: 0.3rem;
+    }
+
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .exp-company {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin: 0.3rem 0 0.7rem;
+    }
+
+    .exp-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+
+    .pub-item {
+      background: var(--card);
+      padding: 1.5rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+    .pub-item:hover { background: var(--surface); }
+
+    .pub-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .pub-venue {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent2);
+    }
+
+    .pub-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .contact-item {
+      background: var(--card);
+      padding: 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: background 0.2s;
+    }
+    .contact-item:hover { background: var(--surface); }
+
+    .contact-platform {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .contact-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="badge">IETE Fellow · F-507407</div>
+    <h1>
+      Suman Basak<br>
+      <span class="line2">Lead SRE & DevOps</span>
+    </h1>
+    <p class="tagline">
+      Building <strong>resilient payment infrastructure</strong> at global scale —
+      19+ years hardening fintech systems that move trillions.
+    </p>
+    <div class="header-meta">
+      <span class="meta-item"><span class="dot"></span> Visa Inc. — Union City, CA</span>
+      <span class="meta-item"><span class="dot"></span> Apple Pay · Samsung Pay · Visa Direct · Paze</span>
+      <span class="meta-item"><span class="dot"></span> PCI-DSS · Zero-Trust · ML Fraud Detection</span>
+    </div>
+    <div class="cta-row">
+      <a href="mailto:your@email.com" class="btn btn-primary">↗ Get in Touch</a>
+      <a href="https://linkedin.com/in/yourprofile" class="btn btn-ghost" target="_blank">LinkedIn</a>
+      <a href="https://github.com/yourusername" class="btn btn-ghost" target="_blank">GitHub</a>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section>
+    <p class="section-label reveal">// About</p>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I am a Lead Software Engineer specialising in <strong>Site Reliability Engineering</strong> and <strong>DevOps</strong> at Visa Inc., where I manage critical payment platform infrastructure serving hundreds of millions of transactions daily.</p>
+        <p>My work sits at the intersection of <em>engineering reliability, security compliance, and intelligent automation</em> — from AI-driven fraud detection systems to blockchain-based settlement protocols.</p>
+        <p>I hold Fellowship status with the <strong>Institution of Electronics and Telecommunication Engineers (IETE)</strong> and actively publish research at the intersection of AI, payments, and distributed systems.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat">
+          <span class="stat-num">19+</span>
+          <span class="stat-label">Years in FinTech</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">Major Pay Platforms</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">IETE</span>
+          <span class="stat-label">Fellow · F-507407</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">PCI</span>
+          <span class="stat-label">DSS Compliance Lead</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section>
+    <p class="section-label reveal">// Expertise</p>
+    <h2 class="reveal">Core Domains</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <h3>Platform Engineering & SRE</h3>
+        <p>Designing fault-tolerant payment systems with 99.999% SLA targets, chaos engineering, and observability-driven operations.</p>
+        <div class="tags">
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">Prometheus</span>
+          <span class="tag">Grafana</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔐</div>
+        <h3>Security & Compliance</h3>
+        <p>PCI-DSS compliant infrastructure, zero-trust architecture, DevSecOps pipelines with automated policy enforcement.</p>
+        <div class="tags">
+          <span class="tag">PCI-DSS</span>
+          <span class="tag">Zero-Trust</span>
+          <span class="tag">Vault</span>
+          <span class="tag">SAST/DAST</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <h3>AI & Intelligent Automation</h3>
+        <p>AI agents for secure SDLC, ML-powered fraud detection, and LLM-driven observability for payment platforms.</p>
+        <div class="tags">
+          <span class="tag">ML Fraud Detection</span>
+          <span class="tag">MCP</span>
+          <span class="tag">AI Agents</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⛓️</div>
+        <h3>Blockchain & Distributed Systems</h3>
+        <p>Blockchain-based payment settlement systems, distributed consensus protocols, and real-time transaction architectures.</p>
+        <div class="tags">
+          <span class="tag">Blockchain</span>
+          <span class="tag">Settlement</span>
+          <span class="tag">Distributed Ledger</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🚀</div>
+        <h3>CI/CD & Developer Enablement</h3>
+        <p>End-to-end pipeline automation, IaC governance, database migration automation with Liquibase, and shift-left testing.</p>
+        <div class="tags">
+          <span class="tag">Jenkins</span>
+          <span class="tag">ArgoCD</span>
+          <span class="tag">Liquibase</span>
+          <span class="tag">Ansible</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Observability Engineering</h3>
+        <p>Full-stack observability pipelines for fintech, SLO/SLI frameworks, and MCP-based monitoring hub architectures.</p>
+        <div class="tags">
+          <span class="tag">OpenTelemetry</span>
+          <span class="tag">ELK Stack</span>
+          <span class="tag">Datadog</span>
+          <span class="tag">Jaeger</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <p class="section-label reveal">// Experience</p>
+    <h2 class="reveal">Career</h2>
+
+    <div class="exp-item reveal">
+      <div class="exp-date">2015 — Present</div>
+      <div>
+        <div class="exp-role">Lead Software Engineer — DevOps & SRE</div>
+        <div class="exp-company">Visa Inc. · Union City, CA</div>
+        <div class="exp-desc">Lead SRE for Apple Pay, Samsung Pay, Visa Direct, and Paze Integration platforms. Responsible for infrastructure reliability, security compliance, and automation strategy for global payment processing at scale.</div>
+        <div class="tags" style="margin-top:0.8rem">
+          <span class="tag">Payment Infrastructure</span>
+          <span class="tag">Apple Pay</span>
+          <span class="tag">Samsung Pay</span>
+          <span class="tag">Visa Direct</span>
+          <span class="tag">Paze</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section>
+    <p class="section-label reveal">// Research & Publications</p>
+    <h2 class="reveal">Selected Work</h2>
+    <div class="pub-list reveal">
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">AI Agents for Secure Software Development Lifecycle in Payment Systems</div>
+          <div class="pub-venue">Conference Submission · TECS-2025 / DHF Track</div>
+        </div>
+        <div class="pub-year">2025</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Fraud Detection Infrastructure at Scale: A Production Case Study</div>
+          <div class="pub-venue">IEEE Conference Paper</div>
+        </div>
+        <div class="pub-year">2025</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Observability-Driven Development in FinTech Platforms</div>
+          <div class="pub-venue">DZone Article</div>
+        </div>
+        <div class="pub-year">2024–25</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Infrastructure as Code for PCI-DSS Compliance Automation</div>
+          <div class="pub-venue">Conference Paper · Agentic Commerce Protocols</div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Blockchain-Based Payment Settlement Systems</div>
+          <div class="pub-venue">Patent Filing (In Progress)</div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Building MCP Hub for DevOps/CI-CD Observability</div>
+          <div class="pub-venue">DZone Technical Article</div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <p class="section-label reveal">// Contact</p>
+    <h2 class="reveal">Get in Touch</h2>
+    <div class="contact-grid reveal">
+      <a href="mailto:your@email.com" class="contact-item">
+        <span class="contact-platform">Email</span>
+        <span class="contact-value">your@email.com</span>
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" class="contact-item" target="_blank">
+        <span class="contact-platform">LinkedIn</span>
+        <span class="contact-value">linkedin.com/in/yourprofile</span>
+      </a>
+      <a href="https://github.com/yourusername" class="contact-item" target="_blank">
+        <span class="contact-platform">GitHub</span>
+        <span class="contact-value">github.com/yourusername</span>
+      </a>
+      <a href="#" class="contact-item">
+        <span class="contact-platform">Location</span>
+        <span class="contact-value">Union City, CA · USA</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Suman Basak · Built with GitHub Pages · IETE Fellow F-507407</p>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
