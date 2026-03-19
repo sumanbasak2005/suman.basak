@@ -183,7 +183,7 @@
       top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       padding: 1.5rem 8vw;
       background: rgba(255,255,255,0.92);
@@ -653,9 +653,14 @@
     }
 
     .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.hidden {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
     .reveal.visible {
@@ -748,7 +753,7 @@
       <span class="badge">Published Researcher</span>
     </div>
     <div class="hero-links">
-      <a href="/cdn-cgi/l/email-protection#d4a7a1b9b5bafab6b5a7b5bfe6e4e4e194b3b9b5bdb8fab7bbb9" class="btn btn-primary">Get In Touch</a>
+      <a href="/cdn-cgi/l/email-protection#ed9e98808c83c38f8c9e8c86dfddddd8ad8a808c8481c38e8280" class="btn btn-primary">Get In Touch</a>
       <a href="#publications" class="btn btn-ghost">View Publications</a>
     </div>
     <div class="scroll-hint">Scroll to explore</div>
@@ -1080,7 +1085,7 @@
     <h2><span class="line"></span>Contact</h2>
     <p class="contact-sub">Open to peer review collaborations, speaking engagements, and professional connections in SRE, DevOps, and AI-driven payment engineering.</p>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#1f6c6a727e71317d7e6c7e742d2f2f2a5f78727e7673317c7072" class="btn btn-primary"><span class="__cf_email__" data-cfemail="b6c5c3dbd7d898d4d7c5d7dd84868683f6d1dbd7dfda98d5d9db">[email&#160;protected]</span></a>
+      <a href="/cdn-cgi/l/email-protection#ff8c8a929e91d19d9e8c9e94cdcfcfcabf98929e9693d19c9092" class="btn btn-primary"><span class="__cf_email__" data-cfemail="d0a3a5bdb1befeb2b1a3b1bbe2e0e0e590b7bdb1b9bcfeb3bfbd">[email&#160;protected]</span></a>
       <a href="https://github.com/sumanbasak2005/suman.basak" target="_blank" class="btn btn-ghost">GitHub</a>
       <a href="https://www.linkedin.com/in/suman-basak/" target="_blank" class="btn btn-ghost">LinkedIn</a>
     </div>
