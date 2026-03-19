@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Suman Basak — Lead SRE & DevOps Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Literata:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suman Basak | Lead SRE / DevOps Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0d14;
-      --surface: #111620;
-      --border: #1e2535;
-      --accent: #00e5ff;
-      --accent2: #ff6b35;
-      --text: #e8eaf0;
-      --muted: #6b7a99;
-      --card: #141926;
+      --bg: #0a0c10;
+      --surface: #12151c;
+      --surface2: #1a1e28;
+      --border: rgba(255,255,255,0.07);
+      --accent: #c8a96e;
+      --accent2: #7eb8d4;
+      --text: #e8e6e0;
+      --muted: #7a7d8a;
+      --highlight: #d4c5a0;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,544 +27,1037 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Literata', Georgia, serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 16px;
       line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* GRID BACKGROUND */
+    /* ─── NOISE OVERLAY ─── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 1000;
+      opacity: 0.4;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── HEADER ── */
+    /* ─── HEADER / HERO ─── */
     header {
-      padding: 5rem 0 3rem;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 8vw 4rem;
+      overflow: hidden;
     }
 
-    .badge {
-      display: inline-block;
+    header::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
       font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
-      border: 1px solid rgba(0,229,255,0.3);
-      padding: 0.3rem 0.9rem;
-      border-radius: 2px;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s ease both;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
     }
 
     h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 5.2rem);
-      font-weight: 800;
-      line-height: 1.0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
       letter-spacing: -0.02em;
-      animation: fadeUp 0.6s 0.1s ease both;
+      color: #fff;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
     }
 
-    h1 .line2 {
-      color: var(--muted);
-      font-weight: 400;
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
     }
 
-    .tagline {
+    .hero-sub {
       margin-top: 1.5rem;
       font-size: 1.1rem;
+      font-weight: 300;
       color: var(--muted);
-      font-style: italic;
       max-width: 560px;
-      animation: fadeUp 0.6s 0.2s ease both;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
     }
 
-    .tagline strong {
-      color: var(--text);
-      font-style: normal;
-    }
-
-    .header-meta {
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
       margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .badge {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(200,169,110,0.35);
+      border-radius: 2rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: rgba(200,169,110,0.06);
+    }
+
+    .hero-links {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      align-items: center;
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-
-    .meta-item {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .meta-item .dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .cta-row {
+      gap: 1.2rem;
       margin-top: 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      animation: fadeUp 0.6s 0.4s ease both;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
     }
 
     .btn {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.06em;
-      padding: 0.75rem 1.6rem;
-      border-radius: 3px;
-      text-decoration: none;
-      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: all 0.25s;
     }
 
     .btn-primary {
       background: var(--accent);
-      color: var(--bg);
-      font-weight: 500;
+      color: #0a0c10;
     }
-    .btn-primary:hover { background: #33ecff; transform: translateY(-2px); }
+
+    .btn-primary:hover { background: #d4b87a; transform: translateY(-2px); }
 
     .btn-ghost {
       border: 1px solid var(--border);
-      color: var(--muted);
+      color: var(--text);
     }
+
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-    /* ── SECTION ── */
-    section { padding: 4rem 0; border-top: 1px solid var(--border); }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 8vw;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s 1.4s forwards;
+    }
+
+    .scroll-hint::before {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--muted));
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 8vw;
+      background: rgba(10,12,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 6rem 8vw;
+      position: relative;
+    }
 
     .section-label {
       font-family: 'DM Mono', monospace;
       font-size: 0.72rem;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
     }
 
     h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.9rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
       font-weight: 700;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.2rem;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 3rem;
     }
 
-    /* ── ABOUT ── */
+    h2 .line {
+      display: inline-block;
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      vertical-align: middle;
+      margin-right: 1rem;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--surface);
+    }
+
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
+      gap: 4rem;
+      align-items: start;
     }
 
-    .about-text p { color: var(--muted); margin-bottom: 1rem; }
-    .about-text p:last-child { margin-bottom: 0; }
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+
+    .about-text p strong {
+      color: var(--highlight);
+      font-weight: 500;
+    }
 
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .stat {
-      background: var(--card);
+      border-radius: 8px;
       padding: 1.5rem;
-      text-align: center;
+      transition: border-color 0.25s, transform 0.25s;
     }
 
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 800;
+    .stat-card:hover {
+      border-color: rgba(200,169,110,0.3);
+      transform: translateY(-3px);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
       color: var(--accent);
       line-height: 1;
-      display: block;
     }
 
     .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,169,110,0.2);
+    }
+
+    .timeline-date {
       font-family: 'DM Mono', monospace;
       font-size: 0.72rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 0.4rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
     }
 
-    /* ── EXPERTISE ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
+    .timeline-role {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
     }
 
-    .skill-card {
-      background: var(--card);
-      padding: 1.8rem;
-      transition: background 0.2s;
-    }
-    .skill-card:hover { background: var(--surface); }
-
-    .skill-icon {
-      font-size: 1.6rem;
+    .timeline-org {
+      font-size: 0.9rem;
+      color: var(--accent2);
       margin-bottom: 0.8rem;
     }
 
-    .skill-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-
-    .skill-card p {
-      font-size: 0.88rem;
+    .timeline-desc {
+      font-size: 0.9rem;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.8;
     }
 
-    .tags {
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
       margin-top: 0.8rem;
+    }
+
+    .tag {
+      padding: 0.2rem 0.65rem;
+      background: rgba(126,184,212,0.1);
+      border: 1px solid rgba(126,184,212,0.2);
+      border-radius: 3px;
+      font-size: 0.72rem;
+      color: var(--accent2);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── PUBLICATIONS ─── */
+    #publications { background: var(--surface); }
+
+    .pub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .pub-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.8rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pub-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .pub-card:hover {
+      border-color: rgba(200,169,110,0.3);
+      transform: translateY(-4px);
+    }
+
+    .pub-card:hover::before { opacity: 1; }
+
+    .pub-venue {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .pub-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .pub-desc {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .pub-link {
+      font-size: 0.78rem;
+      color: var(--accent2);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 500;
+    }
+
+    /* ─── MEDIA ─── */
+    .media-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: all 0.25s;
+      margin-bottom: 1.2rem;
+    }
+
+    .media-card:hover {
+      border-color: rgba(200,169,110,0.3);
+      transform: translateX(6px);
+    }
+
+    .media-outlet {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+      padding-top: 0.3rem;
+      min-width: 90px;
+    }
+
+    .media-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 0.4rem;
+    }
+
+    .media-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── CERTIFICATIONS ─── */
+    #certifications { background: var(--surface); }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .cert-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: all 0.25s;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(200,169,110,0.3);
+      transform: translateY(-3px);
+    }
+
+    .cert-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .cert-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .cert-issuer {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ─── MEMBERSHIPS ─── */
+    .memb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .memb-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.6rem;
+      border-left: 3px solid var(--accent);
+      transition: all 0.25s;
+    }
+
+    .memb-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .memb-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .memb-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ─── SKILLS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.3rem;
+    }
+
+    .skill-group-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .skill-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
 
-    .tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      padding: 0.2rem 0.6rem;
-      background: rgba(0,229,255,0.07);
-      border: 1px solid rgba(0,229,255,0.15);
-      color: var(--accent);
-      border-radius: 2px;
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-item {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .exp-item:last-child { border-bottom: none; }
-
-    .exp-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      padding-top: 0.3rem;
-    }
-
-    .exp-role {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-    }
-
-    .exp-company {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--accent);
-      margin: 0.3rem 0 0.7rem;
-    }
-
-    .exp-desc {
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    /* ── CONTACT ── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .contact-item {
-      background: var(--card);
-      padding: 1.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: background 0.2s;
-    }
-    .contact-item:hover { background: var(--surface); }
-
-    .contact-platform {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-
-    .contact-value {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 2.5rem 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-family: 'DM Mono', monospace;
+    .skill-pill {
       font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 3px;
+      color: var(--text);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+    }
+
+    #contact h2 { margin-bottom: 1rem; }
+
+    .contact-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2rem 8vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
       color: var(--muted);
     }
 
-    /* ── ANIMATIONS ── */
+    /* ─── ANIMATIONS ─── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      header { padding: 5rem 6vw 3rem; }
+      section { padding: 4rem 6vw; }
+      nav { padding: 1.2rem 6vw; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .media-card { flex-direction: column; gap: 0.8rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">S<span>.</span>Basak</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#media">Media</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <!-- HEADER -->
+  <!-- HERO -->
   <header>
-    <div class="badge">IETE Fellow · F-507407</div>
-    <h1>
-      Suman Basak<br>
-      <span class="line2">Lead SRE & DevOps</span>
-    </h1>
-    <p class="tagline">
-      Building <strong>resilient payment infrastructure</strong> at global scale —
-      19+ years hardening fintech systems that move trillions.
+    <div class="hero-eyebrow">Lead SRE / DevOps Engineer · IEEE Senior Member · IETE Fellow</div>
+    <h1>Suman<br /><em>Basak</em></h1>
+    <p class="hero-sub">
+      19+ years architecting mission-critical payment infrastructure. Leading AI-driven automation and site reliability engineering at <strong>Visa Inc.</strong> — powering Apple Pay, Google Pay, Samsung Pay, Visa Direct, and beyond.
     </p>
-    <div class="header-meta">
-      <span class="meta-item"><span class="dot"></span> Visa Inc. — Union City, CA</span>
-      <span class="meta-item"><span class="dot"></span> Apple Pay · Samsung Pay · Visa Direct · Paze</span>
-      <span class="meta-item"><span class="dot"></span> PCI-DSS · Zero-Trust · ML Fraud Detection</span>
+    <div class="badges">
+      <span class="badge">IEEE Senior Member</span>
+      <span class="badge">IETE Fellow</span>
+      <span class="badge">IAENG Member</span>
+      <span class="badge">IEEE Peer Reviewer</span>
+      <span class="badge">Published Researcher</span>
     </div>
-    <div class="cta-row">
-      <a href="/cdn-cgi/l/email-protection#84fdebf1f6c4e1e9e5ede8aae7ebe9" class="btn btn-primary">↗ Get in Touch</a>
-      <a href="https://linkedin.com/in/yourprofile" class="btn btn-ghost" target="_blank">LinkedIn</a>
-      <a href="https://github.com/yourusername" class="btn btn-ghost" target="_blank">GitHub</a>
+    <div class="hero-links">
+      <a href="mailto:suman.basak2005@gmail.com" class="btn btn-primary">Get In Touch</a>
+      <a href="#publications" class="btn btn-ghost">View Publications</a>
     </div>
+    <div class="scroll-hint">Scroll to explore</div>
   </header>
 
   <!-- ABOUT -->
-  <section>
-    <p class="section-label reveal">// About</p>
+  <section id="about">
+    <div class="section-label">Who I am</div>
+    <h2><span class="line"></span>About Me</h2>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>I am a Lead Software Engineer specialising in <strong>Site Reliability Engineering</strong> and <strong>DevOps</strong> at Visa Inc., where I manage critical payment platform infrastructure serving hundreds of millions of transactions daily.</p>
-        <p>My work sits at the intersection of <em>engineering reliability, security compliance, and intelligent automation</em> — from AI-driven fraud detection systems to blockchain-based settlement protocols.</p>
-        <p>I hold Fellowship status with the <strong>Institution of Electronics and Telecommunication Engineers (IETE)</strong> and actively publish research at the intersection of AI, payments, and distributed systems.</p>
+        <p>
+          I am a <strong>Lead Site Reliability and DevOps Engineer</strong> with nearly two decades of experience in payment infrastructure, including 10+ years at <strong>Visa Inc.</strong> I specialize in architecting and operating large-scale distributed payment platforms — from microservices transformation and AI-driven SSDLC automation to end-to-end observability and zero-trust security.
+        </p>
+        <p>
+          My work spans the full lifecycle of global payment systems: I have led engineering on <strong>Apple Pay, Google Pay, Samsung Pay, Visa Direct, Tokenization, Click to Pay, and Paze</strong>, coordinating geographically distributed SRE teams across North America, APAC, and India.
+        </p>
+        <p>
+          Beyond engineering, I contribute to the broader technology community as an <strong>IEEE Senior Member</strong>, <strong>IETE Fellow</strong>, and active peer reviewer for IEEE and ACM publications. My research focuses on AI agents for secure software development, observability engineering, and the future of agentic payment systems.
+        </p>
       </div>
       <div class="stats-grid">
-        <div class="stat">
-          <span class="stat-num">19+</span>
-          <span class="stat-label">Years in FinTech</span>
+        <div class="stat-card">
+          <div class="stat-number">19+</div>
+          <div class="stat-label">Years of experience</div>
         </div>
-        <div class="stat">
-          <span class="stat-num">4</span>
-          <span class="stat-label">Major Pay Platforms</span>
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Years at Visa Inc.</div>
         </div>
-        <div class="stat">
-          <span class="stat-num">IETE</span>
-          <span class="stat-label">Fellow · F-507407</span>
+        <div class="stat-card">
+          <div class="stat-number">150+</div>
+          <div class="stat-label">Microservices managed</div>
         </div>
-        <div class="stat">
-          <span class="stat-num">PCI</span>
-          <span class="stat-label">DSS Compliance Lead</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERTISE -->
-  <section>
-    <p class="section-label reveal">// Expertise</p>
-    <h2 class="reveal">Core Domains</h2>
-    <div class="skills-grid reveal">
-      <div class="skill-card">
-        <div class="skill-icon">⚙️</div>
-        <h3>Platform Engineering & SRE</h3>
-        <p>Designing fault-tolerant payment systems with 99.999% SLA targets, chaos engineering, and observability-driven operations.</p>
-        <div class="tags">
-          <span class="tag">Kubernetes</span>
-          <span class="tag">Terraform</span>
-          <span class="tag">Prometheus</span>
-          <span class="tag">Grafana</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">🔐</div>
-        <h3>Security & Compliance</h3>
-        <p>PCI-DSS compliant infrastructure, zero-trust architecture, DevSecOps pipelines with automated policy enforcement.</p>
-        <div class="tags">
-          <span class="tag">PCI-DSS</span>
-          <span class="tag">Zero-Trust</span>
-          <span class="tag">Vault</span>
-          <span class="tag">SAST/DAST</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">🤖</div>
-        <h3>AI & Intelligent Automation</h3>
-        <p>AI agents for secure SDLC, ML-powered fraud detection, and LLM-driven observability for payment platforms.</p>
-        <div class="tags">
-          <span class="tag">ML Fraud Detection</span>
-          <span class="tag">MCP</span>
-          <span class="tag">AI Agents</span>
-          <span class="tag">Python</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">⛓️</div>
-        <h3>Blockchain & Distributed Systems</h3>
-        <p>Blockchain-based payment settlement systems, distributed consensus protocols, and real-time transaction architectures.</p>
-        <div class="tags">
-          <span class="tag">Blockchain</span>
-          <span class="tag">Settlement</span>
-          <span class="tag">Distributed Ledger</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">🚀</div>
-        <h3>CI/CD & Developer Enablement</h3>
-        <p>End-to-end pipeline automation, IaC governance, database migration automation with Liquibase, and shift-left testing.</p>
-        <div class="tags">
-          <span class="tag">Jenkins</span>
-          <span class="tag">ArgoCD</span>
-          <span class="tag">Liquibase</span>
-          <span class="tag">Ansible</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">📊</div>
-        <h3>Observability Engineering</h3>
-        <p>Full-stack observability pipelines for fintech, SLO/SLI frameworks, and MCP-based monitoring hub architectures.</p>
-        <div class="tags">
-          <span class="tag">OpenTelemetry</span>
-          <span class="tag">ELK Stack</span>
-          <span class="tag">Datadog</span>
-          <span class="tag">Jaeger</span>
+        <div class="stat-card">
+          <div class="stat-number">6+</div>
+          <div class="stat-label">Peer-reviewed publications</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- EXPERIENCE -->
-  <section>
-    <p class="section-label reveal">// Experience</p>
-    <h2 class="reveal">Career</h2>
+  <section id="experience">
+    <div class="section-label">Career</div>
+    <h2><span class="line"></span>Experience</h2>
+    <div class="timeline">
 
-    <div class="exp-item reveal">
-      <div class="exp-date">2015 — Present</div>
-      <div>
-        <div class="exp-role">Lead Software Engineer — DevOps & SRE</div>
-        <div class="exp-company">Visa Inc. · Union City, CA</div>
-        <div class="exp-desc">Lead SRE for Apple Pay, Samsung Pay, Visa Direct, and Paze Integration platforms. Responsible for infrastructure reliability, security compliance, and automation strategy for global payment processing at scale.</div>
-        <div class="tags" style="margin-top:0.8rem">
-          <span class="tag">Payment Infrastructure</span>
-          <span class="tag">Apple Pay</span>
-          <span class="tag">Samsung Pay</span>
-          <span class="tag">Visa Direct</span>
-          <span class="tag">Paze</span>
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Dec 2014 – Present</div>
+        <div class="timeline-role">Lead Software Engineer – SRE / DevOps</div>
+        <div class="timeline-org">Visa Inc. · Austin, TX / Bay Area, CA</div>
+        <div class="timeline-desc">
+          Architecting and operating mission-critical payment platforms at global scale. Led microservices transformation, AI-driven SSDLC automation (AIDAR framework), database deployment automation, global SRE team leadership, and comprehensive observability engineering across Apple Pay, Google Pay, Samsung Pay, Visa Direct, Tokenization, Click to Pay, and Paze integration.
+        </div>
+        <div class="tag-list">
+          <span class="tag">OpenShift</span>
+          <span class="tag">Istio</span>
+          <span class="tag">Jenkins</span>
+          <span class="tag">Prometheus</span>
+          <span class="tag">Grafana</span>
+          <span class="tag">Splunk</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">Ansible</span>
+          <span class="tag">PCI-DSS</span>
+          <span class="tag">AI Agents</span>
         </div>
       </div>
-    </div>
 
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Aug 2012 – Dec 2014</div>
+        <div class="timeline-role">Assistant Technical Consultant – Integration Test Lead / DevOps</div>
+        <div class="timeline-org">RS Software India Ltd. · Client: Visa Inc.</div>
+        <div class="timeline-desc">
+          Led testing for Visa Direct and Visa Checkout, coordinating with banking partners across Canada and APAC. Integrated Visa APIs with issuing banks and executed comprehensive integration test strategies.
+        </div>
+        <div class="tag-list">
+          <span class="tag">Parasoft SOAtest</span>
+          <span class="tag">JMeter</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">SOAP UI</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Nov 2011 – Jul 2012</div>
+        <div class="timeline-role">Consultant – CRM / Project Lead</div>
+        <div class="timeline-org">Cognizant Technology Solutions USA · Clients: Medco, Healthnet</div>
+        <div class="timeline-desc">
+          Led test strategy design and execution using Pega testing tools. Managed sprint velocity estimation, traceability matrices, and upper management status reporting.
+        </div>
+        <div class="tag-list">
+          <span class="tag">Pega</span>
+          <span class="tag">CRM</span>
+          <span class="tag">Program Management</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Apr 2007 – Nov 2011</div>
+        <div class="timeline-role">Senior Software Engineer – Test Lead</div>
+        <div class="timeline-org">RS Software India Ltd. · Client: Visa Inc.</div>
+        <div class="timeline-desc">
+          Functional, regression, and integration testing across VisaNet transaction processing systems. Extensive work on S/390 to z/TPF mainframe migration.
+        </div>
+        <div class="tag-list">
+          <span class="tag">VisaNet</span>
+          <span class="tag">TPF C/C++</span>
+          <span class="tag">IBM S/390</span>
+          <span class="tag">Mainframe</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-label">Research & Writing</div>
+    <h2><span class="line"></span>Publications</h2>
+    <div class="pub-grid">
+
+      <a href="https://ijmra.us/project%20doc/2026/IJME_MARCH2026/IJMIE1_March2026.pdf" target="_blank" class="pub-card reveal">
+        <div class="pub-venue">IJMIE · Vol. 16, Issue 3 · March 2026</div>
+        <div class="pub-title">Building AI Agents for Secure Software Development Lifecycle (SSDLC) in Payments</div>
+        <div class="pub-desc">An AI-powered agentic framework automating development, security scanning, and deployment across 150+ microservices — covering threat modeling, OWASP vulnerability detection, and CI/CD security gate enforcement in PCI-DSS regulated fintech environments.</div>
+        <div class="pub-link">Read Paper →</div>
+      </a>
+
+      <a href="https://ijcttjournal.org/2025/Volume-74/Issue-2/IJCTT-V74I2P101.pdf" target="_blank" class="pub-card reveal">
+        <div class="pub-venue">IJCTT · Vol. 74, Issue 2 · 2025</div>
+        <div class="pub-title">Observability-Driven Development in Fintech Payment Platforms</div>
+        <div class="pub-desc">Explores SLO/SLI frameworks, distributed tracing architectures, and intelligent alerting strategies for high-throughput payment APIs — with practical case studies from production payment infrastructure.</div>
+        <div class="pub-link">Read Paper →</div>
+      </a>
+
+      <a href="https://www.javacodegeeks.com/shifting-left-on-security-how-to-harden-ci-cd-pipelines-for-payment-apis.html" target="_blank" class="pub-card reveal">
+        <div class="pub-venue">JavaCodeGeeks · Industry Article</div>
+        <div class="pub-title">Shifting Left on Security: Hardening CI/CD Pipelines for Payment APIs</div>
+        <div class="pub-desc">Practical strategies for embedding security scanning, SAST/DAST integration, and automated compliance checks into CI/CD pipelines serving payment API workloads at scale.</div>
+        <div class="pub-link">Read Article →</div>
+      </a>
+
+      <a href="https://www.javacodegeeks.com/observability-driven-development-from-logs-to-actionable-intelligence-in-fintech.html" target="_blank" class="pub-card reveal">
+        <div class="pub-venue">JavaCodeGeeks · Industry Article</div>
+        <div class="pub-title">Observability-Driven Development: From Logs to Actionable Intelligence in Fintech</div>
+        <div class="pub-desc">Bridging the gap between raw telemetry and engineering decisions — covering structured logging, trace correlation, and Grafana/Splunk integration patterns for fintech platforms.</div>
+        <div class="pub-link">Read Article →</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MEDIA -->
+  <section id="media">
+    <div class="section-label">Press & Recognition</div>
+    <h2><span class="line"></span>Media Coverage</h2>
+
+    <a href="https://www.india.com/money/suman-basak-the-engineer-building-ai-agents-that-write-secure-and-fix-code-before-humans-even-review-it-8345590/" target="_blank" class="media-card reveal">
+      <div class="media-outlet">India.com</div>
+      <div>
+        <div class="media-title">The Engineer Building AI Agents That Write, Secure, and Fix Code — Before Humans Even Review It</div>
+        <div class="media-desc">Featured coverage on the AI-powered SSDLC framework that autonomously analyzes code diffs, flags security vulnerabilities, and generates remediation recommendations — redefining the developer security feedback loop in payment infrastructure.</div>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-label">Training & Credentials</div>
+    <h2><span class="line"></span>Certifications</h2>
+    <div class="cert-grid reveal">
+
+      <div class="cert-card">
+        <div class="cert-icon">🔴</div>
+        <div>
+          <div class="cert-name">Red Hat OpenShift Development I</div>
+          <div class="cert-issuer">Red Hat, Inc. · May 2019<br />Containerizing Applications</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">⛵</div>
+        <div>
+          <div class="cert-name">Istio Fundamentals</div>
+          <div class="cert-issuer">Tetrate Academy · March 2021<br />Certificate ID: ebvbirvyba</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MEMBERSHIPS -->
+  <section id="memberships">
+    <div class="section-label">Professional Standing</div>
+    <h2><span class="line"></span>Memberships & Recognitions</h2>
+    <div class="memb-grid reveal">
+
+      <div class="memb-card">
+        <div class="memb-title">IEEE Senior Member</div>
+        <div class="memb-sub">Institute of Electrical and Electronics Engineers — Recognized for significant contributions to engineering, technology, and innovation in payment systems and AI automation.</div>
+      </div>
+
+      <div class="memb-card">
+        <div class="memb-title">IETE Fellow</div>
+        <div class="memb-sub">Institution of Electronics and Telecommunication Engineers, India — Fellow designation for outstanding contributions to electronics and telecommunication engineering.</div>
+      </div>
+
+      <div class="memb-card">
+        <div class="memb-title">IAENG Member</div>
+        <div class="memb-sub">International Association of Engineers — Active member contributing to global engineering standards and knowledge exchange.</div>
+      </div>
+
+      <div class="memb-card">
+        <div class="memb-title">IEEE / ACM Peer Reviewer</div>
+        <div class="memb-sub">Academic peer reviewer for IEEE, ACM, and international conferences including AMLDS, IAIT, and ACM TECS — contributing to rigorous scholarly evaluation in computing and engineering.</div>
+      </div>
+
+      <div class="memb-card">
+        <div class="memb-title">Dependable Star of the Year</div>
+        <div class="memb-sub">Visa Inc. UPLIFT Recognition Platform — Recognized for outstanding reliability engineering contributions and cross-team leadership across global payment operations.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" style="background: var(--surface);">
+    <div class="section-label">Technical Expertise</div>
+    <h2><span class="line"></span>Skills</h2>
+    <div class="skills-grid reveal">
+
+      <div class="skill-group">
+        <div class="skill-group-title">CI/CD & Pipelines</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Jenkins</span>
+          <span class="skill-pill">GitHub Actions</span>
+          <span class="skill-pill">Bitbucket Pipelines</span>
+          <span class="skill-pill">Artifactory</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Containerization</div>
+        <div class="skill-pills">
+          <span class="skill-pill">OpenShift</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">Istio Service Mesh</span>
+          <span class="skill-pill">Mirantis</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Observability</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Prometheus</span>
+          <span class="skill-pill">Grafana</span>
+          <span class="skill-pill">Splunk</span>
+          <span class="skill-pill">Bosun</span>
+          <span class="skill-pill">ELK Stack</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Infrastructure as Code</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Terraform</span>
+          <span class="skill-pill">Ansible</span>
+          <span class="skill-pill">Liquibase</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Security & Compliance</div>
+        <div class="skill-pills">
+          <span class="skill-pill">PCI-DSS</span>
+          <span class="skill-pill">SAST/DAST</span>
+          <span class="skill-pill">SonarQube</span>
+          <span class="skill-pill">Checkmarx</span>
+          <span class="skill-pill">OWASP</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">AI & Automation</div>
+        <div class="skill-pills">
+          <span class="skill-pill">AI Agents</span>
+          <span class="skill-pill">GenAI</span>
+          <span class="skill-pill">GitHub Copilot</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Shell Scripting</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Networking</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Microsoft Azure</span>
+          <span class="skill-pill">Hybrid Cloud</span>
+          <span class="skill-pill">F5</span>
+          <span class="skill-pill">NGINX</span>
+          <span class="skill-pill">CDN</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-pills">
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">Oracle</span>
+          <span class="skill-pill">DB2</span>
+          <span class="skill-pill">MongoDB</span>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <!-- CONTACT -->
-  <section>
-    <p class="section-label reveal">// Contact</p>
-    <h2 class="reveal">Get in Touch</h2>
-    <div class="contact-grid reveal">
-      <a href="/cdn-cgi/l/email-protection#f78e988285b7929a969e9bd994989a" class="contact-item">
-        <span class="contact-platform">Email</span>
-        <span class="contact-value"><span class="__cf_email__" data-cfemail="720b1d070032171f131b1e5c111d1f">[email&#160;protected]</span></span>
-      </a>
-      <a href="https://linkedin.com/in/yourprofile" class="contact-item" target="_blank">
-        <span class="contact-platform">LinkedIn</span>
-        <span class="contact-value">linkedin.com/in/yourprofile</span>
-      </a>
-      <a href="https://github.com/yourusername" class="contact-item" target="_blank">
-        <span class="contact-platform">GitHub</span>
-        <span class="contact-value">github.com/yourusername</span>
-      </a>
-      <a href="#" class="contact-item">
-        <span class="contact-platform">Location</span>
-        <span class="contact-value">Union City, CA · USA</span>
-      </a>
+  <section id="contact">
+    <div class="section-label">Let's Connect</div>
+    <h2><span class="line"></span>Contact</h2>
+    <p class="contact-sub">Open to peer review collaborations, speaking engagements, and professional connections in SRE, DevOps, and AI-driven payment engineering.</p>
+    <div class="contact-links">
+      <a href="mailto:suman.basak2005@gmail.com" class="btn btn-primary">suman.basak2005@gmail.com</a>
+      <a href="https://github.com/sumanbasak2005/suman.basak" target="_blank" class="btn btn-ghost">GitHub</a>
+      <a href="tel:+16508635936" class="btn btn-ghost">+1 650-863-5936</a>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 Suman Basak · Built with GitHub Pages · IETE Fellow F-507407</p>
+    <span>© 2026 Suman Basak</span>
+    <span>Lead SRE / DevOps Engineer · IEEE Senior Member · IETE Fellow</span>
   </footer>
 
-</div>
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.for
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
